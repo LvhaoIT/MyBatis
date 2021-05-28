@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.UsersDao">
+    <select id="selectUsers" resultType="com.entity.Users">
+     select userId , userName,password,sex,email from users order by userId
+    </select>
+
+    <insert id="insertUsers">
+      insert into users values(#{userId},#{userName},#{password},#{sex},#{email})
+    </insert>
+
+    <!--
+    parameterType ： dao接口中方法参数的数据类型
+        parameterType 它的值是java的数据类型全限定名称或者是mybatis定义的别名
+        例如：parameterType = "java.lang.Interger"
+        parameterType="int"
+        可以省略不写，可以自动识别
+        不是强制的，mybatis通过反射机制能够返现接口参数的类型
+    -->
+    <select id="selectUserById" parameterType="java.lang.Integer" resultType="com.entity.Users">
+      select userId , userName,password,sex,email from users where userId=#{id}
+    </select>
+
+    <!--多个属性，使用多个对应的属性名-->
+    <select id="selectMutilUsers" resultType="com.entity.Users">
+    select userId , userName,password,sex,email from users where userName=#{userName} and sex=#{sex}
+    </select>
+
+    <!--多个属性，使用一个对象传参-->
+    <select id="selectMutilUsers_01" resultType="com.entity.Users">
+    select userId , userName,password,sex,email from users where password=#{password} and sex=#{sex}
+    </select>
+
+
+    <!--多个属性，使用Map传值-->
+    <!--使用的语法是：#{map的key}-->
+    <select id="selectMutilUsers_Map" resultType="com.entity.Users">
+    select userId , userName,password,sex,email from users where password=#{MapPassword} and sex=#{MapSex}
+    </select>
+
+
+    <!--返回Map
+    1.列名是map的 key，列值
+    2.只能最多返回一行数据-->
+    <select id="selectMapById" resultType="java.util.Map">
+        select userId , userName,password,sex,email from users where userId=#{id}
+    </select>
+
+
+    <!--使用resultMap(解决的是数据库里面的列名和java属性名不统一的情况)
+        第一种方法:
+        1.先定义resultMap
+        2.在select标签中，使用resultMap来引用1定义的
+    -->
+
+    <!--定义resultMap
+        id:自定义名称，表示你定义的这个resultMap
+        type: java类型的全限定名称
+    -->
+    <resultMap id="UsersMap" type="com.entity.Users">
+        <!--列名和java属性的关系-->
+        <!--主键列，使用id标签
+            column:列名
+            property：java类型的属性名
+            -->
+        <id column="userId" property="userId"/>
+        <!--非主键列，使用result-->
+        <result column="userName" property="userName"/>
+        <result column="password" property="password"/>
+        <result column="sex" property="sex"/>
+        <result column="email " property="email"/>
+
+    </resultMap>
+    <select id="selectAllUsers" resultMap="UsersMap">
+        select * from Users order by userId;
+    </select>
+
+
+    <!--第二种方法:
+        利用查询语句内起别名的方式
+    -->
+    <select id="selectAllMyUsers" resultType="com.entity.myUsers">
+        select userId as Id, userName as Name,password,sex,email from users order by userId
+    </select>
+
+
+    <!--模糊查询方式1 java中拼接like字符串-->
+    <select id="selectLikeOne" resultType="com.entity.Users">
+        select * from Users where userName like #{name}
+    </select>
+
+    <!--模糊查询方式2 xml中拼接like字符串（%和空格都是必要的）-->
+    <select id="selectLikeTwo" resultType="com.entity.Users">
+        select * from Users where userName like #{name} "%"
+    </select>
+
+</mapper>

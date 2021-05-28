@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.UsersDao">
+    <select id="selectUsers" resultType="com.entity.Users">
+     select userId , userName,password,sex,email from users order by userId
+    </select>
+
+    <insert id="insertUsers">
+      insert into users values(#{userId},#{userName},#{password},#{sex},#{email})
+    </insert>
+
+    <!--
+    parameterType ： dao接口中方法参数的数据类型
+        parameterType 它的值是java的数据类型全限定名称或者是mybatis定义的别名
+        例如：parameterType = "java.lang.Interger"
+        parameterType="int"
+        可以省略不写，可以自动识别
+        不是强制的，mybatis通过反射机制能够返现接口参数的类型
+    -->
+    <select id="selectUserById" parameterType="java.lang.Integer" resultType="com.entity.Users">
+      select userId , userName,password,sex,email from users where userId=#{id}
+    </select>
+
+    <!--多个属性，使用多个对应的属性名-->
+    <select id="selectMutilUsers" resultType="com.entity.Users">
+    select userId , userName,password,sex,email from users where userName=#{userName} and sex=#{sex}
+    </select>
+
+    <!--多个属性，使用一个对象传参-->
+    <select id="selectMutilUsers_01" resultType="com.entity.Users">
+    select userId , userName,password,sex,email from users where password=#{password} and sex=#{sex}
+    </select>
+
+
+    <!--多个属性，使用Map传值-->
+    <!--使用的语法是：#{map的key}-->
+    <select id="selectMutilUsers_Map" resultType="com.entity.Users">
+    select userId , userName,password,sex,email from users where password=#{MapPassword} and sex=#{MapSex}
+    </select>
+</mapper>

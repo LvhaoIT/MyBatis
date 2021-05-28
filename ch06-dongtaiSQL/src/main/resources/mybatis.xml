@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--指定properties文件的位置,从类路径根开始找文件-->
+    <properties resource="jdbc.properties"/>
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+
+    <!--定义别名两种方式-->
+    <typeAliases>
+        <!--第一种方式
+       可以指定一个类型一个自定义别名
+       type：自动以类型的全限定名称
+       alias：别名（短小容易记忆）-->
+        <!--        <typeAlias type="com.entity.Users" alias="users"/>-->
+
+        <!--第二种方式
+        <package name="com.entity"/> name就是包名，类名就是别名（类名不区分大小写）
+        -->
+        <!--        <package name="com.entity"/>-->
+    </typeAliases>
+    <!--配置插件 (必须放在environments之前)-->
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor"/>
+    </plugins>
+
+    <environments default="mysql">
+        <!--id:数据源的名称 唯一值 自定义 表示环境的名称-->
+        <environment id="mysql">
+            <transactionManager type="JDBC"/>
+
+            <!--dataSource:表示数据源，java体系中，规定实现了javax.sql.DataSource接口的都是数据源
+                           数据源表示实现了connection的对象
+
+                type:指定数据源的类型
+                    1.POOLED：使用连接池，mybatis会创建PooledDataSource类
+                    2.UPOOLED：不使用连接池，在每次执行sql语句时，先创建连接，执行sql，再关闭连接
+                               mybatis会创建一个UnPooledDataSource，管理Connection对象的使用
+                           -->
+            <dataSource type="POOLED">
+
+                <!--连接数据库的四个要素-->
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.user}"/>
+                <property name="password" value="${jdbc.passwd}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+
+    <!-- sql mapper（sql映射文件）的位置-->
+
+    <mappers>
+        <!--第一种引入方式 利用mapper-->
+        <!--告诉 mybatis 要执行的 sql 语句的位置-->
+        <mapper resource="com/dao/UsersDao.xml"/>
+
+        <!--第二种引入方式 利用包名
+            name：xml文件（mapper文件）所在的包名
+            将这个包中所有的xml文件一次性加载给mybatis
+
+            使用要求：
+             1. mapper文件名称需要和接口名称一样，区分大小写
+             2. mapper文件和dao接口需要在同一目录-->
+        <!--        <package name="com.dao"/>-->
+    </mappers>
+</configuration>
+
+

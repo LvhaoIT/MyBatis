@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+
+    <!--定义别名两种方式-->
+    <typeAliases>
+        <!--第一种方式
+       可以指定一个类型一个自定义别名
+       type：自动以类型的全限定名称
+       alias：别名（短小容易记忆）-->
+        <!--        <typeAlias type="com.entity.Users" alias="users"/>-->
+
+        <!--第二种方式
+        <package name="com.entity"/> name就是包名，类名就是别名（类名不区分大小写）
+        -->
+        <!--        <package name="com.entity"/>-->
+    </typeAliases>
+
+
+    <environments default="mysql">
+        <!--id:数据源的名称 唯一值 自定义 表示环境的名称-->
+        <environment id="mysql">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <!--连接数据库的四个要素-->
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://127.0.0.1:3306/kaoshixitong?serverTimezone=UTC"/>
+                <property name="username" value="root"/>
+                <property name="password" value="lh051920"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+
+    <!-- sql mapper（sql映射文件）的位置-->
+
+    <mappers>
+        <!--告诉 mybatis 要执行的 sql 语句的位置-->
+        <mapper resource="com/dao/UsersDao.xml"/>
+    </mappers>
+</configuration>
+
+

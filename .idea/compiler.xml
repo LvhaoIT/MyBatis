@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="ch05-dingyibieming" />
+        <module name="ch02-hell-mybatis" />
+        <module name="ch03-proxy-dao" />
+        <module name="ch04-param" />
+        <module name="ch06-dongtaiSQL" />
+        <module name="ch01-hello-mybatis" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="ch01-hello-mybatis" target="1.8" />
+      <module name="ch02-hell-mybatis" target="1.8" />
+      <module name="ch02-hell-mybatis (1)" target="1.8" />
+      <module name="ch03-pom-dao" target="1.8" />
+      <module name="ch03-proxy-dao" target="1.8" />
+      <module name="ch04-param" target="1.8" />
+      <module name="ch05-dingyibieming" target="1.8" />
+      <module name="ch05-dingyibieming (1)" target="1.8" />
+      <module name="ch05-定义别名" target="1.8" />
+      <module name="ch06-dongtaiSQL" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
